@@ -1,0 +1,37 @@
+#include <iostream>
+#include <random>
+#define srand (18140218)
+using namespace std;
+
+double rand_exp(double t,double rand_val){
+    double y;
+    y = -1/t * log(rand_val);
+    return y;
+}
+
+int main(){
+    double queue = 0;
+    double t,lam;
+    double cus_num =0;
+    double loss_num = 0;
+    double use_time;
+    double finish = 0;
+    cin >> t >> lam;
+    while (queue <= 10000){
+        double rand_val = (((double)rand() + 0.5 )/ (1.0 + RAND_MAX));
+        double rand_val2 = (((double)rand() + 0.5 )/ (1.0 + RAND_MAX));
+        double y = rand_exp(t,rand_val);
+        queue += y;
+        
+        if (finish < queue){
+            use_time = rand_exp(lam,rand_val2);
+            finish = queue + use_time;
+            cus_num += 1;
+        }else {
+            cus_num += 1;
+            loss_num += 1;
+        }
+    }
+    double rate = loss_num / cus_num;
+    cout << rate <<endl;
+}
